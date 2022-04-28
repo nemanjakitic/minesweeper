@@ -6,6 +6,10 @@ This project was bootstrapped with [Create React App](https://github.com/faceboo
 
 In the project directory, you can run:
 
+## Project details
+
+This is the mini game called minesweeper and you can find it on the link [link](https://nemanjakitic.github.io/minesweeper/:)
+
 ### `npm start`
 
 Runs the app in the development mode.\
