@@ -1,6 +1,11 @@
-import { call } from 'redux-saga/effects';
+import { put, take, call } from 'redux-saga/effects';
 import { eventChannel } from 'redux-saga';
-import  ws from '../../app/ws';
+
+import {
+  setGridMap,
+  setStatus
+} from './GridMapSlice';
+import ws from '../../app/ws';
 
 const initWebSocketChannel = () => {
   return eventChannel(emit => {
@@ -21,4 +26,32 @@ const initWebSocketChannel = () => {
 
 export default function* GridMapSaga() {
   const webSocketChannel = yield call(initWebSocketChannel);
+
+  while (true) {
+    const event = yield take(webSocketChannel);
+    if (event && event.data) {
+      if (event.data.startsWith('map:')) {
+        const eventData = event.data.replace('map:', '').split('\n').filter((x: string) => x !== '');
+
+        const gridMap = eventData.map((row: string) => (
+          row.split('')
+        ))
+
+        yield put(setGridMap(gridMap));
+      }
+      if (event.data.startsWith('new:') || event.data.startsWith('open: OK')) {
+        yield put(setStatus('playing'));
+        yield ws.send('map');
+      }
+      if (event.data.startsWith('open: You win')) {
+        yield put(setStatus('win'));
+        yield ws.send('map');
+      }
+      if (event.data === 'open: You lose') {
+        yield put(setStatus('lose'));
+        yield ws.send('map');
+      }
+    }
+
+  }
 }

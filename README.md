@@ -8,7 +8,7 @@ In the project directory, you can run:
 
 ## Project details
 
-This is the mini game called minesweeper and you can find it on the link [link](https://nemanjakitic.github.io/minesweeper/:)
+This is the mini minesweeper project, you can find it and try on this [link](https://nemanjakitic.github.io/minesweeper/)
 
 ### `npm start`
 

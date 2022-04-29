@@ -1,19 +1,28 @@
 import * as React from 'react';
 import { styled, useTheme } from '@mui/material/styles';
-import Box from '@mui/material/Box';
-import Drawer from '@mui/material/Drawer';
+import {
+  Button,
+  Box,
+  Drawer,
+  ListItemButton,
+  Toolbar,
+  List,
+  Typography,
+  Divider,
+  IconButton,
+  ListItemText
+} from '@mui/material'
 import CssBaseline from '@mui/material/CssBaseline';
 import MuiAppBar, { AppBarProps as MuiAppBarProps } from '@mui/material/AppBar';
-import ListItemButton from '@mui/material/ListItemButton';
-import Toolbar from '@mui/material/Toolbar';
-import List from '@mui/material/List';
-import Typography from '@mui/material/Typography';
-import Divider from '@mui/material/Divider';
-import IconButton from '@mui/material/IconButton';
 import MenuIcon from '@mui/icons-material/Menu';
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 import ChevronRightIcon from '@mui/icons-material/ChevronRight';
-import ListItemText from '@mui/material/ListItemText';
+import ws from '../../app/ws';
+import { useAppSelector, useAppDispatch } from '../../app/hooks';
+import {
+  selectDifficulty,
+  setNewGame
+} from '../GridMap/GridMapSlice';
 
 const drawerWidth = 240;
 
@@ -69,6 +78,8 @@ const DrawerHeader = styled('div')(({ theme }) => ({
 export const Header = () => {
   const theme = useTheme();
   const [open, setOpen] = React.useState(false);
+  const difficulty = useAppSelector(selectDifficulty);
+  const dispatch = useAppDispatch();
 
   const handleDrawerOpen = () => {
     setOpen(true);
@@ -79,7 +90,13 @@ export const Header = () => {
   };
 
   const handleClick = (index: number) => {
+    ws.send(`new ${index}`);
     handleDrawerClose();
+  };
+
+  const handleNewGame = () => {
+    ws.send(`new ${difficulty}`);
+    dispatch(setNewGame(true));
   };
 
   return (
@@ -96,9 +113,10 @@ export const Header = () => {
           >
             <MenuIcon />
           </IconButton>
-          <Typography variant="h6" noWrap component="div">
+          <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
             Minesweeper game
           </Typography>
+          <Button onClick={handleNewGame} color="inherit">START AGAIN</Button>
         </Toolbar>
       </AppBar>
       <Drawer

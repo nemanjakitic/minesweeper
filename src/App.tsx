@@ -1,10 +1,13 @@
 import { Header } from './features/Header/Header';
+import { GridMap } from './features/GridMap/GridMap';
+import { Container } from '@mui/material';
 
 function App() {
   return (
-    <div>
+    <Container style={{whiteSpace: 'nowrap' }} >
       <Header />
-    </div>
+      <GridMap />
+    </Container>
   )
 }
 
