@@ -14,7 +14,7 @@ interface GridMapProps {
   newGame: boolean;
 }
 
-const GridMap = (props: GridMapProps) => {
+const GridCell = (props: GridMapProps) => {
   const { x, y, cell, newGame } = props;
   const [flag, setFlag] = useState(false);
   const dispatch = useAppDispatch();
@@ -47,4 +47,4 @@ const GridMap = (props: GridMapProps) => {
   );
 };
 
-export default GridMap;
+export const GridCellMemo = React.memo(GridCell);
