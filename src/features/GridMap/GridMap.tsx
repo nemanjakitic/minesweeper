@@ -57,7 +57,7 @@ export const GridMap = (props: AppProps) => {
                     ))}
                 </Grid>
             </Grid>
-            <Button onClick={handleNewGame} color="inherit">Star again</Button>
+            <Button onClick={handleNewGame} color="inherit">Start again</Button>
             <Dialog open={['win', 'lose'].includes(status)}>
                 <DialogContent>
                     {handleStatus()}
